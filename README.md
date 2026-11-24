@@ -12,19 +12,22 @@ go get github.com/leviathan0992/pulseten/go
 
 ## Contents
 
-Each platform directory is a Go module holding the libraries for one
-`GOOS`/`GOARCH` pair:
+Each platform directory is a Go module holding the libraries for one platform.
+The musl modules are selected with the `pulseten_use_musl` build tag:
 
 | Directory | Platform |
 | --- | --- |
 | `darwin-arm64` | macOS on Apple silicon |
-| `linux-amd64` | Linux on x86-64 |
-| `linux-arm64` | Linux on ARM64 |
+| `linux-amd64` | Linux on x86-64, glibc |
+| `linux-amd64-musl` | Linux on x86-64, musl |
+| `linux-arm64` | Linux on ARM64, glibc |
+| `linux-arm64-musl` | Linux on ARM64, musl |
 
 A module contains `libpulseten.a` with PulseTen itself, `libduckdb.a` and
 `libduckdb_core_functions.a` with the DuckDB build it uses, and a small cgo file
-that links them. Building still requires cgo and a C toolchain with the C++
-standard library, but not CMake, a C++ build of DuckDB or pkg-config.
+that links them. On Linux `libduckdb.a` is split into parts to stay under the
+file size limit of GitHub. Building still requires cgo and a C toolchain with
+the C++ standard library, but not CMake, a C++ build of DuckDB or pkg-config.
 
 ## Releases
 
